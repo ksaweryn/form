@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { getInputElementData } from '../../util/elementUtil';
 import { EMAIL_REGEX } from '../../util/regexUtil';
 import Messages from '../Messages';
+import { EMAIL_ACTION } from '../../reduce/form/actions';
 
-const Email = ({ setState }) => {
+const Email = ({ dispatchAction }) => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [showMessage, setShowMessage] = useState(false);
   const [message, setMessage] = useState('');
@@ -15,12 +16,12 @@ const Email = ({ setState }) => {
     if (!!matchRegex) {
       setIsValidEmail(true);
       setShowMessage(false);
-      setState(true);
+      dispatchAction({ type: EMAIL_ACTION, payload: true });
     } else {
       setIsValidEmail(false);
       setShowMessage(true);
       setMessage('It is not a valid email address');
-      setState(false);
+      dispatchAction({ type: EMAIL_ACTION, payload: false });
     }
   };
 
@@ -42,7 +43,7 @@ const Email = ({ setState }) => {
 };
 
 Email.propTypes = {
-  setState: PropTypes.func.isRequired,
+  dispatchAction: PropTypes.func.isRequired,
 };
 
 export default Email;

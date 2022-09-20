@@ -5,6 +5,7 @@ import { getLastCharacterTyped } from '../../util/textUtil';
 import { INVALID_USERNAME_CHARACTERS_REGEX } from '../../util/regexUtil';
 import Messages from '../Messages';
 import './UserName.css';
+import { USERNAME_ACTION } from '../../reduce/form/actions';
 
 const EMPTY_CHAR = '';
 const INFO_ICON = '/info.svg';
@@ -12,7 +13,7 @@ const INFO_ICON = '/info.svg';
 const isValidPassword = (newPassword) =>
   newPassword.match(INVALID_USERNAME_CHARACTERS_REGEX);
 
-const UserName = ({ setState }) => {
+const UserName = ({ dispatchAction }) => {
   const [hasInputError, setHasInputError] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -29,11 +30,11 @@ const UserName = ({ setState }) => {
         EMPTY_CHAR
       );
       setHasInputError(true);
-      setState(false);
+      dispatchAction({ type: USERNAME_ACTION, payload: false });
       return;
     }
     setMessage('');
-    setState(true);
+    dispatchAction({ type: USERNAME_ACTION, payload: true });
     setHasInputError(false);
   };
 
@@ -75,7 +76,7 @@ const UserName = ({ setState }) => {
 };
 
 UserName.propTypes = {
-  setState: PropTypes.func.isRequired,
+  dispatchAction: PropTypes.func.isRequired,
 };
 
 export default UserName;

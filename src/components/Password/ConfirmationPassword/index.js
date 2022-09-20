@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { getInputElementData } from '../../../util/elementUtil';
 import Messages from '../../Messages';
 
-import './ConfirmationPassword.css'
+import './ConfirmationPassword.css';
+import { PASSWORD_CONFIRMATION_ACTION } from '../../../reduce/form/actions';
 
-const ConfirmationPassword = ({ setState }) => {
+const ConfirmationPassword = ({ dispatchAction }) => {
   const [isPasswordEqual, setIsPasswordEqual] = useState(true);
   const [showConfirmedPassWord, setShowConfirmedPassword] = useState(false);
   const [message, setMessage] = useState('');
@@ -29,12 +30,12 @@ const ConfirmationPassword = ({ setState }) => {
     if (test !== passwordElement) {
       setIsPasswordEqual(false);
       setMessage('Passwords are not equal');
-      setState(false);
+      dispatchAction({ type: PASSWORD_CONFIRMATION_ACTION, payload: false });
       return;
     }
     setMessage('');
     setIsPasswordEqual(true);
-    setState(true);
+    dispatchAction({ type: PASSWORD_CONFIRMATION_ACTION, payload: true });
   };
 
   return (
@@ -63,7 +64,7 @@ const ConfirmationPassword = ({ setState }) => {
 };
 
 ConfirmationPassword.propTypes = {
-  setState: PropTypes.func.isRequired,
+  dispatchAction: PropTypes.func.isRequired,
 };
 
 export default ConfirmationPassword;

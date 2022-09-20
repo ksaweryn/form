@@ -7,10 +7,11 @@ import Tooltip from '../Tooltip';
 import { randomPassword } from '../../util/textUtil';
 
 import './Password.css';
+import { PASSWORD_ACTION } from '../../reduce/form/actions';
 
 const INFO_ICON = '/info.svg';
 
-const Password = ({ setState }) => {
+const Password = ({ dispatchAction }) => {
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState('');
@@ -25,12 +26,12 @@ const Password = ({ setState }) => {
     if (!hasPasswordRequirements) {
       setIsValidPassword(false);
       setMessage('Not valid password');
-      setState(false);
+      dispatchAction({ type: PASSWORD_ACTION, payload: false});
       return;
     }
     setMessage('');
     setIsValidPassword(true);
-    setState(true);
+    dispatchAction({ type: PASSWORD_ACTION, payload: true });
   };
 
   const changePasswordVisibility = () => {
@@ -101,7 +102,7 @@ const Password = ({ setState }) => {
 };
 
 Password.propTypes = {
-  setState: PropTypes.func.isRequired,
+  dispatchAction: PropTypes.func.isRequired,
 };
 
 export default Password;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import './App.css';
 import Email from './components/Email';
 import Messages from './components/Messages';
@@ -6,16 +6,19 @@ import Password from './components/Password';
 import ConfirmationPassword from './components/Password/ConfirmationPassword';
 import UserName from './components/UserName';
 import users, { addUser } from './data/users';
+import { USERNAME_ACTION } from './reduce/form/actions';
+import { formInitialState } from './reduce/form/formInitialState';
+import { formReducer } from './reduce/form/reducer';
 
 function App() {
-  const [usernameState, setUsernameState] = useState(false);
-  const [emailState, setEmailState] = useState(false);
-  const [passwordState, setPasswordState] = useState(false);
-  const [passwordConfirmationState, setPasswordConfirmationState] =
-    useState(false);
+  const [state, dispatch] = useReducer(formReducer, formInitialState);
+
   const [message, setMessage] = useState('');
   const isValidForm =
-    usernameState && emailState && passwordState && passwordConfirmationState;
+    state.usernameState &&
+    state.emailState &&
+    state.passwordState &&
+    state.passwordConfirmationState;
 
   const handleSubmit = (event) => {
     const formElement = event.target.form;
@@ -31,7 +34,7 @@ function App() {
       email.value = null;
       password.value = null;
       passwordConfirmation.value = null;
-      setUsernameState(false);
+      dispatch({ type: USERNAME_ACTION, payload: false });
       console.dir(users);
     }
 
@@ -51,10 +54,10 @@ function App() {
       )}
       <div className="App-form-container">
         <form className="App-form" autoComplete="on">
-          <UserName setState={setUsernameState} />
-          <Email setState={setEmailState} />
-          <Password setState={setPasswordState} />
-          <ConfirmationPassword setState={setPasswordConfirmationState} />
+          <UserName dispatchAction={dispatch} />
+          <Email dispatchAction={dispatch} />
+          <Password dispatchAction={dispatch} />
+          <ConfirmationPassword dispatchAction={dispatch} />
 
           <div className="App-form-actions">
             <input
