@@ -1,0 +1,14 @@
+.UserName-icon-image {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.UserName {
+  width: 100%;
+}
+
+.UserName-label {
+  display: flex;
+  column-gap: 5px;
+}

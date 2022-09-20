@@ -1,0 +1,10 @@
+
+.Messages-info {
+  color: darkcyan;
+  text-overflow: hidden;
+  overflow-wrap: break-word;
+}
+
+.Messages-Error {
+  color: red;
+}

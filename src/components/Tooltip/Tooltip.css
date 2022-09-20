@@ -1,0 +1,26 @@
+.Tooltip {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.Tooltip .Tooltip-text {
+  visibility: hidden;
+  width: 50%;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  left: 50%;
+  position: absolute;
+  z-index: 1;
+}
+
+.Tooltip:hover .Tooltip-text {
+  visibility: visible;
+}
+
+.Tooltip .Tooltip-clickable {
+  cursor: pointer;
+}
