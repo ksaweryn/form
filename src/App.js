@@ -14,21 +14,13 @@ function App() {
   const [state, dispatch] = useReducer(formReducer, formInitialState);
 
   const [message, setMessage] = useState('');
-  const isValidForm =
-    state.usernameState &&
-    state.emailState &&
-    state.passwordState &&
-    state.passwordConfirmationState;
+  const isValidForm = Object.values(state).every((value) => value);
 
   const handleSubmit = (event) => {
     const formElement = event.target.form;
     const [user, email, password, passwordConfirmation] = formElement;
     const response = addUser(user.value, email.value);
-    if (response === false) {
-      setMessage(
-        `User ${user.value} or email ${email.value} already used, please change it`
-      );
-    } else {
+    if (response !== false) {
       setMessage('Welcome to the future!');
       user.value = null;
       email.value = null;
@@ -36,6 +28,10 @@ function App() {
       passwordConfirmation.value = null;
       dispatch({ type: USERNAME_ACTION, payload: false });
       console.dir(users);
+    } else {
+      setMessage(
+        `User ${user.value} or email ${email.value} already used, please change it`
+      );
     }
 
     setTimeout(() => {
